@@ -47,3 +47,4 @@ def jugar(mazo, jugador, repartidor):
         
     
 jugar(mezclar(baraja()), [], [])
+print("Esto es un cambio")
