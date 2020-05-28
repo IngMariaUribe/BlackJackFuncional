@@ -40,10 +40,23 @@ def valor_mano_recargador(mano):
     
 #Definir juego
 def jugar(mazo, jugador, repartidor):
+    
+    print oculta(repartidor)
     print("Mano del jugador ",jugador)
-    print("Mano del repartidor ",repartidor)
+   # print("Mano del repartidor ",repartidor)
     if len(mazo) > 2 and valor_mano_recargador(jugador) < 21 and valor_mano_recargador(repartidor) < 21:
         return jugar(mazo[2:], jugador+[mazo[0]], repartidor+[mazo[1]])
-        
+    else:
+        print "___________________________________________________________________________________________________________________________________________________________________________________________________"
+        print "Asi quedo el juego:"
+        print "Repartidor: ",repartidor
+        print "Jugador", jugador
+      
+def oculta(mazo):     
+    if mazo==[]:
+        pass
+    else:
+        return "Mano repartidor: ",mazo[0],[(n, p) for n in (['|%|']) for p in range(1,len(mazo))]
+     
     
 jugar(mezclar(baraja()), [], [])
