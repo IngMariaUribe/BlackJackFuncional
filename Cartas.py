@@ -31,48 +31,37 @@ def valor_mano(mano):
         return 0
     return valor_carta(mano[0]) + valor_mano(mano[1:])
 
-#Definir peso de la mano del reparridor
+#Definir peso de la mano del repartidor
 def valor_mano_recargador(mano):
     if valor_mano(mano) <= 11 and 1 in [valor_carta(x) for x in mano]:
         return valor_mano(mano) + 10
     else:
         return valor_mano(mano)
-    0
+    
 #Definir juego
-def jugar(mazo, jugador, repartidor,juegaJugador):
-    print("Mano del jugador ",jugador)
-    print("Mano del repartidor ",repartidor)
-    if(valor_mano_recargador(jugador)>21 or valor_mano_recargador(repartidor)>21):
-        pass
-    else:
-        #Determinar si el jugador sigue o se plata
-        if(juegaJugador==True):
-            if(int(input("Presione 1 si desea tomar otra carta o 0 si desea plantarse "))==1):
-                if( valor_mano_recargador(repartidor)<15):
-                    if(len(mazo)>=2):
-                        return jugar(mazo[2:], jugador+[mazo[0]], repartidor+[mazo[1]], True)
-                    else:
-                        print("No hay cartas Suficientes")
-                        pass
-                else:
-                    return jugar(mazo[1:], jugador+[mazo[0]], repartidor, True)
-            else:
-                if(valor_mano_recargador(repartidor)<15):
-                    if(len(mazo)>=1):
-                        return jugar(mazo[1:], jugador, repartidor+[mazo[0]], False)
-                    else:
-                        print("No hay cartas suficientes")
-                        pass
-                else:
-                    pass
-        elif(valor_mano_recargador(repartidor)<15 and juegaJugador==False):
-            if(len(mazo)>=1):
-                return jugar(mazo[1:], jugador, repartidor+[mazo[0]], False)
-            else:
-                print("No hay cartas Suficientes")
-                pass
-        else:
-            pass
-  
-jugar(mezclar(baraja()), [], [], True)
-print("Se acabó el juego :v")
+def jugar(mazo, jugador, repartidor):
+    print("Mano del jugador ", " "*5, jugador, " "*6,valor_mano_recargador(jugador))
+    print("Mano del repartidor ", " "*2, repartidor, " "*6,valor_mano_recargador(repartidor))
+    
+    if len(mazo) > 2 and valor_mano_recargador(jugador) < 21 and valor_mano_recargador(repartidor) < 21:
+        return jugar(mazo[2:], jugador+[mazo[0]], repartidor+[mazo[1]])
+    ganador(jugador, repartidor)
+    
+def ganador(jugador, repartidor):
+    if valor_mano_recargador(jugador) == 21 and valor_mano_recargador(repartidor) < 21:
+        print("Gana jugador")
+    elif valor_mano_recargador(repartidor) == 21 and valor_mano_recargador(jugador) < 21:
+        print("Gana repartidor")
+    elif valor_mano_recargador(jugador) > 21:
+        print("Pierde jugador, gana repartidor")
+    elif valor_mano_recargador(repartidor) > 21:
+        print("Gana jugador, pierde repartidor")
+    elif 21 - valor_mano_recargador(jugador) < 21 - valor_mano_recargador(repartidor):
+        print("Gana jugador")
+    elif 21 - valor_mano_recargador(repartidor) < 21 - valor_mano_recargador(jugador):
+        print("Gana repartidor")
+    elif valor_mano_recargador(jugador) == valor_mano_recargador(repartidor):
+        print("Empate")
+
+
+jugar(mezclar(baraja()), [], [])
