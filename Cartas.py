@@ -45,5 +45,21 @@ def jugar(mazo, jugador, repartidor):
     if len(mazo) > 2 and valor_mano_recargador(jugador) < 21 and valor_mano_recargador(repartidor) < 21:
         return jugar(mazo[2:], jugador+[mazo[0]], repartidor+[mazo[1]])
         
+def ganador(jugador, repartidor):
+    if valor_mano_recargador(jugador) == 21 and valor_mano_recargador(repartidor) < 21:
+        print("Gana jugador")
+    elif valor_mano_recargador(repartidor) == 21 and valor_mano_recargador(jugador) < 21:
+        print("Gana repartidor")
+    elif valor_mano_recargador(jugador) > 21:
+        print("Pierde jugador, gana repartidor")
+    elif valor_mano_recargador(repartidor) > 21:
+        print("Gana jugador, pierde repartidor")
+    elif 21 - valor_mano_recargador(jugador) < 21 - valor_mano_recargador(repartidor):
+        print("Gana jugador")
+    elif 21 - valor_mano_recargador(repartidor) < 21 - valor_mano_recargador(jugador):
+        print("Gana repartidor")
+    elif valor_mano_recargador(jugador) == valor_mano_recargador(repartidor):
+        print("Empate")
     
 jugar(mezclar(baraja()), [], [])
+ganador(jugador,repartidor)
