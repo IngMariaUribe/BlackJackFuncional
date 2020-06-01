@@ -49,23 +49,24 @@ def jugar(mazo, jugador, repartidor,juegaJugador):
     if jugador == [] and repartidor == []:
         jugar(mazo[4:], jugador+[mazo[0]] + [mazo[1]], repartidor+[mazo[2]] + [mazo[3]],True)        
         pass
-    if len(jugador)==2 and  len(repartidor)==2 and juegaJugador==True:
-        print("Así inicia el juego:")
-        print("Mano del jugador ",jugador)
-        print(oculta(repartidor))
-        print (10*"_")
+    else:    
+        if len(jugador)==2 and  len(repartidor)==2 and juegaJugador==True:
+            print("Así inicia el juego:")
+            print("Mano del jugador ",jugador)
+            print(oculta(repartidor))
+            print (10*"_")
 
-    if(len(jugador)>2):
-      print("Mano del jugador ",jugador)
-    
-    if(valor_mano_recargador(jugador)>=21 or juegaJugador==False):
-          casaplay(mazo,jugador, repartidor,True)          
-          pass
-    else:
-            if(int(input("Presione 1 para tomar carta o 0 si desea plantarse "))==1 and juegaJugador==True):
-              return jugar(mazo[1:], jugador+[mazo[0]], repartidor, True)
-            else:
-              return jugar(mazo[:], jugador, repartidor, False)
+        if(len(jugador)>2):
+          print("Mano del jugador ",jugador)
+
+        if(valor_mano_recargador(jugador)>=21 or juegaJugador==False):
+              casaplay(mazo,jugador, repartidor,True)          
+              pass
+        else:
+                if(int(input("Presione 1 para tomar carta o 0 si desea plantarse "))==1 and juegaJugador==True):
+                  return jugar(mazo[1:], jugador+[mazo[0]], repartidor, True)
+                else:
+                  return jugar(mazo[:], jugador, repartidor, False)
            
 def ganador(jugador, repartidor):
     print ("_"*15)
