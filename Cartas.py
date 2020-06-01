@@ -8,7 +8,7 @@ from random import shuffle
 
 # Imprime la baraja de cartas de manera ordenada
 def baraja():
-    return [(n, p) for n in (['A', 'J', 'Q', 'K']+[str(x) for x in range(2, 11)]) for p in ['♠', '♥', '♣', '♦']]
+    return [(n, p) for n in (['A', 'J', 'Q', 'K']+[str(x) for x in range(2, 10)]) for p in ['♠', '♥', '♣', '♦']]
 
 #Mezcla la baraja
 def mezclar(baraja):
