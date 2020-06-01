@@ -1,3 +1,9 @@
+"""
+Juan David Rosero Torres 20181020071
+Maria Fernanda Uribe 20172020110
+Yeimer Serrano Navarro 20181020060
+"""
+
 from random import shuffle
 
 # Imprime la baraja de cartas de manera ordenada
@@ -37,29 +43,83 @@ def valor_mano_recargador(mano):
         return valor_mano(mano) + 10
     else:
         return valor_mano(mano)
-    
+    0
 #Definir juego
-def jugar(mazo, jugador, repartidor):
-    print("Mano del jugador ",jugador)
-    print("Mano del repartidor ",repartidor)
-    if len(mazo) > 2 and valor_mano_recargador(jugador) < 21 and valor_mano_recargador(repartidor) < 21:
-        return jugar(mazo[2:], jugador+[mazo[0]], repartidor+[mazo[1]])
-        
-def ganador(jugador, repartidor):
-    if valor_mano_recargador(jugador) == 21 and valor_mano_recargador(repartidor) < 21:
-        print("Gana jugador")
-    elif valor_mano_recargador(repartidor) == 21 and valor_mano_recargador(jugador) < 21:
-        print("Gana repartidor")
-    elif valor_mano_recargador(jugador) > 21:
-        print("Pierde jugador, gana repartidor")
-    elif valor_mano_recargador(repartidor) > 21:
-        print("Gana jugador, pierde repartidor")
-    elif 21 - valor_mano_recargador(jugador) < 21 - valor_mano_recargador(repartidor):
-        print("Gana jugador")
-    elif 21 - valor_mano_recargador(repartidor) < 21 - valor_mano_recargador(jugador):
-        print("Gana repartidor")
-    elif valor_mano_recargador(jugador) == valor_mano_recargador(repartidor):
-        print("Empate")
+def jugar(mazo, jugador, repartidor,juegaJugador):
+    if jugador == [] and repartidor == []:
+        jugar(mazo[4:], jugador+[mazo[0]] + [mazo[1]], repartidor+[mazo[2]] + [mazo[3]],True)        
+        pass
+    if len(jugador)==2 and  len(repartidor)==2 and juegaJugador==True:
+        print("Así inicia el juego:")
+        print("Mano del jugador ",jugador)
+        print(oculta(repartidor))
+        print (10*"_")
+
+    if(len(jugador)>2):
+      print("Mano del jugador ",jugador)
     
-jugar(mezclar(baraja()), [], [])
-ganador(jugador,repartidor)
+    if(valor_mano_recargador(jugador)>=21 or juegaJugador==False):
+          casaplay(mazo,jugador, repartidor,True)          
+          pass
+    else:
+            if(int(input("Presione 1 para tomar carta o 0 si desea plantarse "))==1 and juegaJugador==True):
+              return jugar(mazo[1:], jugador+[mazo[0]], repartidor, True)
+            else:
+              return jugar(mazo[:], jugador, repartidor, False)
+           
+def ganador(jugador, repartidor):
+    print ("_"*15)
+    if valor_mano_recargador(jugador) == 21 and valor_mano_recargador(repartidor) < 21:
+        print("Ganaste")
+    elif valor_mano_recargador(repartidor) == 21 and valor_mano_recargador(jugador) < 21:
+        print("Gana la casa")
+    elif valor_mano_recargador(jugador) > 21:
+        print("Gana la casa")
+    elif valor_mano_recargador(repartidor) > 21:
+        print("Ganaste")
+    elif 21 - valor_mano_recargador(jugador) < 21 - valor_mano_recargador(repartidor):
+        print("Ganaste")
+    elif 21 - valor_mano_recargador(repartidor) < 21 - valor_mano_recargador(jugador):
+        print("Gana la casa")
+    elif valor_mano_recargador(jugador) == valor_mano_recargador(repartidor):
+        print("Gana la casa")
+
+    print ("Asi quedo el juego:")
+    print ("Casa: ",repartidor)
+    print ("Jugador", jugador)
+       
+def oculta(mazo):     
+    if mazo==[]:
+        pass
+    else:
+        return "Mano casa: ",mazo[0],[(n, p) for n in (['|%|']) for p in range(1,len(mazo))]      
+
+def casaplay(mazo, jugador, casa,estado):
+
+    if(estado==True):
+            if(valor_mano_recargador(casa)<21):
+              if(valor_mano_recargador(jugador)==21): 
+                return casaplay(mazo[1:], jugador, casa+[mazo[0]], True)
+              if(valor_mano_recargador(jugador)>21): 
+                if( valor_mano_recargador(casa)<=11):            
+                    return casaplay(mazo[1:], jugador, casa+[mazo[0]], True)
+                else:
+                    ganador(jugador, casa)
+                    pass
+              if(valor_mano_recargador(jugador)<21): 
+                if(valor_mano_recargador(casa)<=16):
+                    return casaplay(mazo[1:], jugador, casa+[mazo[0]], True)
+                else:
+                    ganador(jugador, casa)
+                    pass
+            else:
+              ganador(jugador, casa)
+              pass
+
+    else:
+      print("Algo anda mal...")
+
+    
+
+jugar(mezclar(baraja()), [], [], True)
+
